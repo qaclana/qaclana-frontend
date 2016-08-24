@@ -1,0 +1,43 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/iron-data-table/iron-data-table.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+
+<dom-module id="qc-requests">
+    <!-- Defines the element's style and local DOM -->
+    <template>
+        <style>
+            :host {
+                display: block;
+                padding: 15px;
+            }
+        </style>
+        <h1>Requests</h1>
+
+        <iron-ajax url="/requests.json" last-response="{{data}}" auto></iron-ajax>
+        <iron-data-table id="requests-grid" items="[[data]]">
+            <data-table-column name="Request ID" filter-by="request.id" sort-by="request.id">
+                <template>[[item.request.id]]</template>
+            </data-table-column>
+            <data-table-column name="Status" filter-by="request.status" sort-by="request.status">
+                <template>[[item.request.status]]</template>
+            </data-table-column>
+            <data-table-column name="Path" filter-by="request.path" sort-by="request.path">
+                <template>[[item.request.path]]</template>
+            </data-table-column>
+            <data-table-column name="Date and time" filter-by="request.datetime" sort-by="request.datetime">
+                <template>[[item.request.datetime]]</template>
+            </data-table-column>
+        </iron-data-table>
+    </template>
+
+    <!-- Creates the element's prototype and registers it -->
+    <script>
+        Polymer({
+            is: 'qc-requests',
+            properties: {
+                route: Object
+            }
+        });
+    </script>
+</dom-module>

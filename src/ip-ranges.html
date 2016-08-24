@@ -1,0 +1,40 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/iron-data-table/iron-data-table.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+
+<dom-module id="qc-ip-ranges">
+    <!-- Defines the element's style and local DOM -->
+    <template>
+        <style>
+            :host {
+                display: block;
+                padding: 15px;
+            }
+        </style>
+        <h1>IP Ranges</h1>
+
+        <iron-ajax url="/ip-ranges.json" last-response="{{data}}" auto></iron-ajax>
+        <iron-data-table id="ip-ranges-grid" items="[[data]]">
+            <data-table-column name="Start" filter-by="ip-range.start" sort-by="ip-range.start">
+                <template>[[item.ip-range.start]]</template>
+            </data-table-column>
+            <data-table-column name="End" filter-by="ip-range.end" sort-by="ip-range.end">
+                <template>[[item.ip-range.end]]</template>
+            </data-table-column>
+            <data-table-column name="Status" filter-by="ip-range.status" sort-by="ip-range.status">
+                <template>[[item.ip-range.status]]</template>
+            </data-table-column>
+        </iron-data-table>
+    </template>
+
+    <!-- Creates the element's prototype and registers it -->
+    <script>
+        Polymer({
+            is: 'qc-ip-ranges',
+            properties: {
+                route: Object
+            }
+        });
+    </script>
+</dom-module>

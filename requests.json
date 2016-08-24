@@ -1,0 +1,14 @@
+[
+  {"request": {
+    "id": "123456",
+    "status": "blocked",
+    "path": "GET /good/url",
+    "datetime": "2016-08-23T05:03:01+0200"
+  }},
+  {"request": {
+    "id": "123457",
+    "status": "passed",
+    "path": "POST /bad/url",
+    "datetime": "2016-08-23T07:04:01+0200"
+  }}
+]

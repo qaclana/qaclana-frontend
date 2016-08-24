@@ -1,0 +1,12 @@
+[
+  {"ip-range": {
+    "start": "200.201.1.1",
+    "end": "200.203.255.255",
+    "status": "blacklisted"
+  }},
+  {"ip-range": {
+    "start": "192.168.0.1",
+    "end": "192.168.255.255",
+    "status": "whitelisted"
+  }}
+]

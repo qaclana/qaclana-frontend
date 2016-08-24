@@ -1,0 +1,92 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/google-chart/google-chart.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-toast/paper-toast.html">
+
+<dom-module id="qc-dashboard">
+    <!-- Defines the element's style and local DOM -->
+    <template>
+        <style>
+            :host {
+                display: block;
+                padding: 15px;
+            }
+
+            .card-light { color: var(--paper-grey-600); }
+            paper-card { margin-top: 15px;}
+        </style>
+        <h1>Dashboard</h1>
+        <paper-card heading="System state" id="system-state-card">
+            <div class="card-content">
+                <paper-dropdown-menu id="system-state-value" label="State" on-iron-select="_onIronSelectSystemState">
+                    <paper-listbox class="dropdown-content" selected="2">
+                        <paper-item>DISABLED</paper-item>
+                        <paper-item>ENABLED</paper-item>
+                        <paper-item>ENFORCING</paper-item>
+                    </paper-listbox>
+                </paper-dropdown-menu>
+            </div>
+        </paper-card>
+        <paper-card heading="Requests Blocked">
+            <div class="card-content">
+                <google-chart
+                        type='column'
+                        options='{"title": "# of bad requests this week"}'
+                        cols='[{"label":"Day", "type":"string"}, {"label":"Requests", "type":"number"}]'
+                        rows='[["Monday", 175],["Tuesday", 160],["Wednesday", 165],["Thursday", 155],["Friday", 187],["Saturday", 267],["Sunday", 302]]'>
+                </google-chart>
+            </div>
+        </paper-card>
+        <paper-card heading="% blocked">
+            <div class="card-content">
+                <p>
+                    <google-chart
+                            type='pie'
+                            options='{"title": "Bad vs. Good requests"}'
+                            cols='[{"label":"Type", "type":"string"}, {"label":"Requests", "type":"number"}]'
+                            rows='[["Good", 9842],["Bad", 158]]'>
+                    </google-chart>
+                </p>
+            </div>
+        </paper-card>
+        <paper-card heading="Blacklist updates" id="blacklists-card">
+            <div class="card-content">
+                <p class="card-light">
+                    The blacklist from Emerging Threats has been updated at 00:00:01 UTC.
+                </p>
+            </div>
+            <div class="card-actions">
+                <paper-button on-tap="_onTapBlacklist">Update now</paper-button>
+            </div>
+        </paper-card>
+        <paper-toast id="toast-updating-blacklist" class="fit-bottom" text="Blacklist is now being updated."></paper-toast>
+        <paper-toast id="toast-updating-system-state" class="fit-bottom" text="System state being updated."></paper-toast>
+    </template>
+
+    <!-- Creates the element's prototype and registers it -->
+    <script>
+        Polymer({
+            is: 'qc-dashboard',
+            properties: {
+                route: Object
+            },
+            currentSystemState: 'ENFORCING', // this should be the value coming from the backend
+            _onTapBlacklist: function() {
+                this.$['toast-updating-blacklist'].fitInto = this.$['blacklists-card'];
+                this.$['toast-updating-blacklist'].open();
+            },
+            _onIronSelectSystemState: function() {
+                if (this.$['system-state-value'].value !== this.currentSystemState) {
+                    console.info("Updating system state to " + this.$['system-state-value'].value + ". Previous value was: " + this.currentSystemState);
+                    this.$['toast-updating-system-state'].fitInto = this.$['system-state-card'];
+                    this.$['toast-updating-system-state'].open();
+                    this.currentSystemState = this.$['system-state-value'].value;
+                }
+            }
+        });
+    </script>
+</dom-module>
