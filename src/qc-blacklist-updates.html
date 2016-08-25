@@ -1,0 +1,35 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-toast/paper-toast.html">
+
+<dom-module id="qc-blacklist-updates">
+    <!-- Defines the element's style and local DOM -->
+    <template>
+        <style>
+            :host {
+            }
+        </style>
+        <paper-card heading="Blacklist updates" id="blacklists-card">
+            <div class="card-content">
+                <p class="card-light">
+                    The blacklist from Emerging Threats has been updated at 00:00:01 UTC.
+                </p>
+            </div>
+            <div class="card-actions">
+                <paper-button on-tap="_onTapBlacklist">Update now</paper-button>
+            </div>
+        </paper-card>
+        <paper-toast id="toast-updating-blacklist" class="fit-bottom" text="Blacklist is now being updated."></paper-toast>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'qc-blacklist-updates',
+            _onTapBlacklist: function() {
+                this.$['toast-updating-blacklist'].fitInto = this.$['blacklists-card'];
+                this.$['toast-updating-blacklist'].open();
+            }
+        });
+    </script>
+</dom-module>

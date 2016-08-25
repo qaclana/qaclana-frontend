@@ -1,0 +1,31 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/google-chart/google-chart.html">
+
+<dom-module id="qc-chart-bad-vs-good">
+    <!-- Defines the element's style and local DOM -->
+    <template>
+        <style>
+            :host {
+            }
+        </style>
+        <paper-card heading="% blocked">
+            <div class="card-content">
+                <p>
+                    <google-chart
+                            type='pie'
+                            options='{"title": "Bad vs. Good requests"}'
+                            cols='[{"label":"Type", "type":"string"}, {"label":"Requests", "type":"number"}]'
+                            rows='[["Good", 9842],["Bad", 158]]'>
+                    </google-chart>
+                </p>
+            </div>
+        </paper-card>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'qc-chart-bad-vs-good'
+        });
+    </script>
+</dom-module>

@@ -1,8 +1,13 @@
 {
   "entrypoint": "index.html",
-  "shell": "src/app.html",
+  "shell": "src/qc-app.html",
   "fragments": [
-    "src/dashboard.html",
-    "src/requests.html"
+    "src/qc-blacklist-updates.html",
+    "src/qc-chart-bad-requests.html",
+    "src/qc-chart-bad-vs-good.html",
+    "src/qc-dashboard.html",
+    "src/qc-ipranges.html",
+    "src/qc-requests.html",
+    "src/qc-system-state.html"
   ]
 }

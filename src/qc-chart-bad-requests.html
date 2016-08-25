@@ -1,0 +1,30 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/google-chart/google-chart.html">
+
+<dom-module id="qc-chart-bad-requests">
+    <!-- Defines the element's style and local DOM -->
+    <template>
+        <style>
+            :host {
+                padding: 15px;
+            }
+        </style>
+        <paper-card heading="Requests Blocked">
+            <div class="card-content">
+                <google-chart
+                        type='column'
+                        options='{"title": "# of bad requests this week"}'
+                        cols='[{"label":"Day", "type":"string"}, {"label":"Requests", "type":"number"}]'
+                        rows='[["Monday", 175],["Tuesday", 160],["Wednesday", 165],["Thursday", 155],["Friday", 187],["Saturday", 267],["Sunday", 302]]'>
+                </google-chart>
+            </div>
+        </paper-card>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'qc-chart-bad-requests'
+        });
+    </script>
+</dom-module>

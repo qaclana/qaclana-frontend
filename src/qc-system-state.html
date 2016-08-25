@@ -1,0 +1,69 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../bower_components/iron-data-table/iron-data-table.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+
+<dom-module id="qc-system-state">
+    <!-- Defines the element's style and local DOM -->
+    <template>
+        <style>
+            :host {
+            }
+        </style>
+        <paper-card heading="System state" id="system-state-card">
+            <div class="card-content">
+                <paper-dropdown-menu id="system-state-value" label="State" on-iron-select="_onIronSelectSystemState">
+                    <paper-listbox class="dropdown-content" id="system-state-list">
+                        <paper-item>DISABLED</paper-item>
+                        <paper-item>ENABLED</paper-item>
+                        <paper-item>ENFORCING</paper-item>
+                    </paper-listbox>
+                </paper-dropdown-menu>
+            </div>
+        </paper-card>
+        <iron-ajax
+                id="get-system-state"
+                auto
+                with-credentials
+                url="http://jdoe:password@localhost:8180/backend-0.0.1-SNAPSHOT/v1/system-state"
+                handle-as="json"
+                on-response="_systemStateResponse"></iron-ajax>
+        <paper-toast id="toast-updating-system-state" class="fit-bottom" text="System state being updated."></paper-toast>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'qc-system-state',
+            currentSystemState: undefined, // this should be the value coming from the backend
+            _onIronSelectSystemState: function() {
+                if (this.$['system-state-value'].value !== this.currentSystemState) {
+                    console.info("Updating system state to " + this.$['system-state-value'].value + ". Previous value was: " + this.currentSystemState);
+                    this.$['toast-updating-system-state'].fitInto = this.$['system-state-card'];
+                    this.$['toast-updating-system-state'].open();
+                    this.currentSystemState = this.$['system-state-value'].value;
+                }
+            },
+            _systemStateResponse: function(data) {
+                this.currentSystemState = data.detail.response;
+                var list = this.$['system-state-list'];
+                var index = -1;
+                for (var i = 0; i < list.items.length ; i++) {
+                    console.debug(list.items[i].text);
+                    console.debug("is it equals to");
+                    console.debug(this.currentSystemState);
+                    if (list.items[i] == this.currentSystemState) {
+                        index = i;
+                        console.debug("yes");
+                        console.debug(i);
+                        console.debug(list.items[i]);
+                        break;
+                    } else {
+                        console.debug("no");
+                    }
+                }
+                console.debug("Switching the current state to: " + this.currentSystemState);
+                list.select(index);
+            }
+        });
+    </script>
+</dom-module>

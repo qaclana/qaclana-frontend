@@ -2,35 +2,30 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <title>kart-home</title>
+    <title>System state tests</title>
 
     <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
     <script src="../bower_components/web-component-tester/browser.js"></script>
     <script src="../bower_components/iron-test-helpers/mock-interactions.js"></script>
 
     <!-- Import the element to test -->
-    <link rel="import" href="../src/dashboard.html">
+    <link rel="import" href="../src/qc-system-state.html">
 
 </head>
 <body>
 
 <test-fixture id="basic">
     <template>
-        <qc-dashboard></qc-dashboard>
+        <qc-system-state></qc-system-state>
     </template>
 </test-fixture>
 
 <script>
-    suite('dashboard tests', function() {
+    suite('system state tests', function() {
         var home;
 
         setup(function() {
             home = fixture('basic');
-        });
-
-        test('System state card should be present', function () {
-            var card = Polymer.dom(home.root).querySelector('#system-state-card');
-            expect(card).not.to.be.equal(undefined);
         });
 
         test('Changing system state shows a toast', function () {
@@ -58,7 +53,15 @@
                 });
             });
             MockInteractions.tap(dropdown);
-        })
+        });
+
+        test('System state update is sent to server', function () {
+            // TODO: implement this test
+        });
+
+        test('System state from server is set onLoad', function () {
+            // TODO: implement this test
+        });
     });
 </script>
 </body>

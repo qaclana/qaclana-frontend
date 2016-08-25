@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>Dashboard tests</title>
+
+    <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../bower_components/web-component-tester/browser.js"></script>
+    <script src="../bower_components/iron-test-helpers/mock-interactions.js"></script>
+
+    <!-- Import the element to test -->
+    <link rel="import" href="../src/qc-dashboard.html">
+
+</head>
+<body>
+
+<test-fixture id="basic">
+    <template>
+        <qc-dashboard></qc-dashboard>
+    </template>
+</test-fixture>
+
+<script>
+    suite('dashboard tests', function() {
+        var home;
+
+        setup(function() {
+            home = fixture('basic');
+        });
+
+        test('System state card should be present', function () {
+            var card = Polymer.dom(home.root).querySelector('qc-system-state');
+            expect(card).not.to.be.equal(undefined);
+        });
+    });
+</script>
+</body>
+</html>
