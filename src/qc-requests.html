@@ -14,7 +14,11 @@
         </style>
         <h1>Requests</h1>
 
-        <iron-ajax url="/requests.json" last-response="{{data}}" auto></iron-ajax>
+        <iron-ajax
+                auto
+                url="/requests.json"
+                last-response="{{data}}"></iron-ajax>
+
         <iron-data-table id="requests-grid" items="[[data]]">
             <data-table-column name="Request ID" filter-by="request.id" sort-by="request.id">
                 <template>[[item.request.id]]</template>
